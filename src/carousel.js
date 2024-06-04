@@ -44,16 +44,15 @@ const arrowRight = document.querySelector('.arrow-right');
 const arrowLeft = document.querySelector('.arrow-left');
 
 
-let activeImage = findActiveImage()
-let nextImage = activeImage.nextElementSibling;
-let previousImage = activeImage.previousElementSibling || imagesContainer.lastChild;
-let imageIndexs
+let activeImage
+let nextImage 
+let previousImage 
 
 
 function findActiveImage () {
     for (const image of imageArray) {
         if (image.classList.contains('active-image')) {
-            return image
+            activeImage = image;
         } 
     }
     return null;
@@ -61,14 +60,27 @@ function findActiveImage () {
 
 function changeToNextImage () {
     findActiveImage();
+    nextImage = activeImage.nextElementSibling || imagesContainer.firstChild;
     nextImage.classList.add('active-image');
     activeImage.classList.remove('active-image');
 }
 
+function changeToPreviousImage() {
+    findActiveImage();
+    previousImage = activeImage.previousElementSibling || imagesContainer.lastChild;
+    previousImage.classList.add('active-image');
+    activeImage.classList.remove('active-image');
+}
 
 
 arrowRight.addEventListener('click', ()=>{
-changeToNextImage();
+    console.log('arrow right clicked');
+    changeToNextImage();
+})
+
+arrowLeft.addEventListener('click', ()=> {
+    console.log('arrow left clicked');
+    changeToPreviousImage();
 })
 
 }
