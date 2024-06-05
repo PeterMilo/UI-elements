@@ -36,51 +36,66 @@ export function createCarousel (placeCarousel) {
 
 
 export function makeCarouselInteractive () {
-console.log('Ready')
+    console.log('Ready')
 
-const imagesContainer = document.querySelector('.image-carousel-viewport');
-const imageArray = document.querySelector('.image-carousel-viewport').children;
-const arrowRight = document.querySelector('.arrow-right');
-const arrowLeft = document.querySelector('.arrow-left');
-
-
-let activeImage
-let nextImage 
-let previousImage 
+    const imagesContainer = document.querySelector('.image-carousel-viewport');
+    const imageArray = document.querySelector('.image-carousel-viewport').children;
+    const dotsArray = document.querySelector('.carousel-dots').children;
+    const arrowRight = document.querySelector('.arrow-right');
+    const arrowLeft = document.querySelector('.arrow-left');
 
 
-function findActiveImage () {
-    for (const image of imageArray) {
-        if (image.classList.contains('active-image')) {
-            activeImage = image;
-        } 
+    let activeImage
+    let nextImage 
+    let previousImage 
+
+
+    function findActiveImage () {
+        for (const image of imageArray) {
+            if (image.classList.contains('active-image')) {
+                activeImage = image;
+            } 
+        }
+        return null;
+    }  
+
+    function changeToNextImage () {
+        findActiveImage();
+        nextImage = activeImage.nextElementSibling || imagesContainer.firstChild;
+        nextImage.classList.add('active-image');
+        activeImage.classList.remove('active-image');
     }
-    return null;
-}
 
-function changeToNextImage () {
-    findActiveImage();
-    nextImage = activeImage.nextElementSibling || imagesContainer.firstChild;
-    nextImage.classList.add('active-image');
-    activeImage.classList.remove('active-image');
-}
+    function changeToPreviousImage() {
+        findActiveImage();
+        previousImage = activeImage.previousElementSibling || imagesContainer.lastChild;
+        previousImage.classList.add('active-image');
+        activeImage.classList.remove('active-image');
+    }
 
-function changeToPreviousImage() {
-    findActiveImage();
-    previousImage = activeImage.previousElementSibling || imagesContainer.lastChild;
-    previousImage.classList.add('active-image');
-    activeImage.classList.remove('active-image');
-}
+    function changeImageFromDots(dotIndex) {
+        findActiveImage();
+        imageArray[dotIndex].classList.add('active-image');
+        activeImage.classList.remove('active-image');
+    }
 
 
-arrowRight.addEventListener('click', ()=>{
-    console.log('arrow right clicked');
-    changeToNextImage();
-})
+    arrowRight.addEventListener('click', ()=>{
+        console.log('arrow right clicked');
+        changeToNextImage();
+    })
 
-arrowLeft.addEventListener('click', ()=> {
-    console.log('arrow left clicked');
-    changeToPreviousImage();
-})
+    arrowLeft.addEventListener('click', ()=> {
+        console.log('arrow left clicked');
+        changeToPreviousImage();
+    })
+
+    // Makes dots interactive by looping through dots and passing dot index to function that changes active image class.
+    for (let i = 0; i < dotsArray.length; i++) {
+        dotsArray[i].addEventListener('click', () => {
+            console.log('Clicked dot index:', i);
+            changeImageFromDots(i);
+        });
+    }
 
 }
