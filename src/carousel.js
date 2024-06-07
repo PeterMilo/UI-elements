@@ -32,6 +32,8 @@ export function createCarousel (placeCarousel) {
     carouselViewport.appendChild(imageOne)
     carouselViewport.appendChild(imageTwo)
     carouselViewport.appendChild(imageThree)
+
+    makeCarouselInteractive();
 }
 
 
@@ -64,6 +66,8 @@ export function makeCarouselInteractive () {
         nextImage = activeImage.nextElementSibling || imagesContainer.firstChild;
         nextImage.classList.add('active-image');
         activeImage.classList.remove('active-image');
+        findActiveImage();
+        updateActiveDot();
     }
 
     function changeToPreviousImage() {
@@ -71,12 +75,28 @@ export function makeCarouselInteractive () {
         previousImage = activeImage.previousElementSibling || imagesContainer.lastChild;
         previousImage.classList.add('active-image');
         activeImage.classList.remove('active-image');
+        findActiveImage();
+        updateActiveDot();
     }
 
     function changeImageFromDots(dotIndex) {
         findActiveImage();
         imageArray[dotIndex].classList.add('active-image');
         activeImage.classList.remove('active-image');
+        findActiveImage();
+        updateActiveDot();
+    }
+
+    function updateActiveDot () {
+        const imageArrayIndex = Array.from(imageArray).indexOf(activeImage)
+        
+        for (let dot = 0; dot < dotsArray.length; dot++) {
+            if (dot === imageArrayIndex) {
+                dotsArray[dot].classList.add('active');
+            } else {
+                dotsArray[dot].classList.remove('active');
+            }
+        }
     }
 
 
@@ -98,4 +118,7 @@ export function makeCarouselInteractive () {
         });
     }
 
+
+    findActiveImage();
+    updateActiveDot();
 }

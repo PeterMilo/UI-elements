@@ -1,10 +1,10 @@
 # PROJECT
 
 Status:
-Arrows work.
+
 
 Next:
-Interactive dots
+Dots should indicate what image is active
 
 
 

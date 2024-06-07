@@ -7,7 +7,7 @@ import { createCarousel, makeCarouselInteractive } from "./carousel.js";
 const insertCarousel = document.querySelector('.image-carousel');
 
 createCarousel(insertCarousel);
-makeCarouselInteractive();
+// makeCarouselInteractive();
 
 
 
