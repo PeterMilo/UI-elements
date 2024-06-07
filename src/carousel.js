@@ -38,15 +38,14 @@ export function createCarousel (placeCarousel) {
 
 
 export function makeCarouselInteractive () {
-    console.log('Ready')
 
+    // CSS selection elements
     const imagesContainer = document.querySelector('.image-carousel-viewport');
     const imageArray = document.querySelector('.image-carousel-viewport').children;
     const dotsArray = document.querySelector('.carousel-dots').children;
     const arrowRight = document.querySelector('.arrow-right');
     const arrowLeft = document.querySelector('.arrow-left');
-
-
+  
     let activeImage
     let nextImage 
     let previousImage 
@@ -62,27 +61,39 @@ export function makeCarouselInteractive () {
     }  
 
     function changeToNextImage () {
+        // Original active image
         findActiveImage();
+
         nextImage = activeImage.nextElementSibling || imagesContainer.firstChild;
         nextImage.classList.add('active-image');
         activeImage.classList.remove('active-image');
+
+        // New active image
         findActiveImage();
         updateActiveDot();
     }
 
     function changeToPreviousImage() {
+        // Original active image
         findActiveImage();
+
         previousImage = activeImage.previousElementSibling || imagesContainer.lastChild;
         previousImage.classList.add('active-image');
         activeImage.classList.remove('active-image');
+
+        // New active image
         findActiveImage();
         updateActiveDot();
     }
 
     function changeImageFromDots(dotIndex) {
         findActiveImage();
+
+        // Takes dotIndex passed from for-loop further down
         imageArray[dotIndex].classList.add('active-image');
         activeImage.classList.remove('active-image');
+
+        // New active image
         findActiveImage();
         updateActiveDot();
     }
@@ -100,6 +111,8 @@ export function makeCarouselInteractive () {
     }
 
 
+
+// Interactive elements based on button presses 
     arrowRight.addEventListener('click', ()=>{
         console.log('arrow right clicked');
         changeToNextImage();
@@ -119,6 +132,7 @@ export function makeCarouselInteractive () {
     }
 
 
+// Initial instatiation
     findActiveImage();
     updateActiveDot();
 }
